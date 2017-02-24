@@ -1,9 +1,8 @@
-from selenium import webdriver
-
-from application import Application
-from group import Group
-
 import pytest
+
+from fixture.application import Application
+from model.group import Group
+
 
 @pytest.fixture
 def app(request):
@@ -12,12 +11,12 @@ def app(request):
     return fixture
 
 def test_add_group(app):  # self - obekt, v kotorom vizivaetsa metod
-    app.login(username="admin", password="secret")
+    app.session.login(username="admin", password="secret")
     # sozdaem obekt tipa Group i peredaem perametri v ego konstruktor
     app.create_group(Group(name="fdgsgh", header="dsfgsdfg", footer="xcbcvx"))
-    app.logout()
+    app.session.logout()
 
 def test_add_empty_group(app):  # self - obekt, v kotorom vizivaetsa metod
-    app.login(username="admin", password="secret")
+    app.session.login(username="admin", password="secret")
     app.create_group(Group(name="", header="", footer=""))
-    app.logout()
+    app.session.logout()
